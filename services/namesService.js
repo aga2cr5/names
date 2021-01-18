@@ -2,16 +2,9 @@ import { executeQuery } from "../database/database.js";
 import {
     validate,
     required,
-    isNumber,
-    lengthBetween,
-    minNumber,
-    maxNumber
+    lengthBetween
   } from "../deps.js";
 
-const validationRules = {
-    name: [required, lengthBetween(3, 20)],
-    amount: [required, isNumber, minNumber(1), maxNumber(100)]
-};
 
 //gets names from database in normal order
 const getNames = async() => {
@@ -49,68 +42,46 @@ const getAmountOfNames = async() => {
     return result.rowsOfObjects()[0];
 }
 
+//creates data object for getData function
+let data = {
+    name: '',
+    errors: {}
+};
+
+//gets data from the post request
+const getData = async(request) => {
+    if (request) {
+        const body = request.body();
+        const params = await body.value;
+        let name = params.get('name');
+        if (!(name.charAt(0) === name.charAt(0).toUpperCase())) {
+            name = name.charAt(0).toUpperCase() + name.slice(1);
+            data.name = name;
+        } else {
+            data.name = name;
+        }
+    }
+    return data;
+}
+//validation rules for getAmountOfName funtion input
+const validationRules = {
+    name: [required, lengthBetween(3, 20)]
+};
+    
 //gets amount of given name from database
-const getAmountOfName = async(name) => {
-    const result = await executeQuery("SELECT * FROM names WHERE name = $1;", name);
-    if (!result.lenght === 0) {
-        return 0;
+const getAmountOfName = async(request) => {
+    let data_obj = await getData(request);
+    const [passes, errors] = await validate(data_obj, validationRules);
+    if (!passes) {
+        data_obj.errors = errors;
+        return data_obj;
+    }
+    const result = await executeQuery("SELECT * FROM names WHERE name = $1;", data_obj.name);
+    if (result.rowsOfObjects()[0] === undefined) {
+        return [];
     }
     return result.rowsOfObjects()[0];
 }
 
-//deletes given name from database
-//if there are more than one people with the same name just the amount is decreased
-const removeName = async(name) => {
-    const result = await getAmountOfName(name);
-    if (result === undefined || result <= 0) {
-        return "No names to delete"
-    }
-    let amount = result.amount;
-    if (amount === 1) {
-        await executeQuery("DELETE FROM names WHERE name = $1;", name);
-    } else {
-        amount--;
-        await executeQuery("UPDATE names SET amount = $1 WHERE name = $2;", amount, name);
-    } 
-}
 
-let data = {
-    name: '',
-    amount: '',
-    errors: {}
-};
-
-const getData = async(request) => {
-    data.errors = {};
-    if (request) {
-        const body = request.body();
-        const params = await body.value;
-        data.name = params.get('name');
-        data.amount = Number(params.get('amount'));
-    }
-    return data;
-}
-
-//adds a new entry to database with given name and amount
-//if name already exists just the amount is increased
-const setName = async(request) => {
-    const data = await getData(request);
-    const [passes, errors] = await validate(data, validationRules);
-    if (passes) {
-        const name = data.name;
-        let amount = Number(data.amount);
-        const result = await getAmountOfName(name);
-        if (result === undefined || result.amount <= 0) {
-            await executeQuery("INSERT INTO names (name, amount) VALUES ($1, $2);", name, amount);
-        } else {
-            amount = amount + Number(result.amount);
-            await executeQuery("UPDATE names SET amount = $1 WHERE name = $2;", amount, name);
-        }
-    } else {
-        data.errors = errors;
-        return data;
-    }
-}
-
-
-export { getNames, getNamesOrderByAmount, getNamesOrderByName, getAmountOfNames, getAmountOfName, removeName, setName };
+export { getNames, getNamesOrderByAmount, getNamesOrderByName, getAmountOfNames, getAmountOfName };

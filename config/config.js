@@ -3,6 +3,7 @@ let config = {};
 if (Deno.env.get('TEST_ENVIRONMENT')) {
   config.database = {};
 } else {
+  //replace these with your postgresql database info
   config.database = {
     hostname: "rogue.db.elephantsql.com",
     database: "xhjtwwhy",
@@ -12,4 +13,8 @@ if (Deno.env.get('TEST_ENVIRONMENT')) {
   };
 }
 
-export { config }; 
+//replace this with the port you want to run this application
+const port = 7777;
+
+
+export { config, port }; 

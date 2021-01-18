@@ -1,24 +1,36 @@
-<%- include('./partials/header.ejs') %> 
-
-
+<%- include('./partials/header.ejs') %>
 <div class="container">
-
-    <h1>20 MOST COMMON SOLITA MALE AND FEMALE NAMES</h1>
-
-    <div class="form-group">
-        <form action="/sorted/popularity" method="GET">
-            <input class="form-control" type="submit" value="Popularity">
-        </form>
-
-        <form action="/sorted/alphabetical" method="GET">
-            <input class="form-control" type="submit" value="Alphabetical">
-        </form>
+    <h1>20 MOST COMMON SOLITA MALE AND FEMALE NAMES</h1><br>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <form action="/" method="GET">
+                    <input class="form-control" type="submit" value="Default">
+                </form>
+                <form action="/sorted/popularity" method="GET">
+                    <input class="form-control" type="submit" value="Popularity">
+                </form>
+                <form action="/sorted/alphabetical" method="GET">
+                    <input class="form-control" type="submit" value="Alphabetical">
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="form-group">
+                <form action="/" method="POST">
+                    <fieldset>
+                        <label for="name">Get amount of certain name:</label>
+                        <input class="form-control" type="text" name="name" value="<%= data.name %>" id="name">
+                        <%- include('./partials/errors.ejs', { errors: data.errors, attribute: 'name'}) %>
+                        <input class="btn btn-primary" type="submit" name="Submit">
+                    </fieldset>
+                </form>
+            </div>
+        </div>
     </div>
-
     <div>
         <h3>Total amount of names is <%= totalAmount.total %></h3>
     </div>
-
     <table class="table">
         <thead>
             <tr>
@@ -32,39 +44,10 @@
                     <% names.forEach((obj) => { %>
                     <td><%= obj.name %></td>
                     <td><%= obj.amount %></td>
-                    <td>
-                        <form action="/delete/<%= obj.name %>" method="POST">
-                            <fieldset>
-                                <button class="btn btn-primary">
-                                    Remove  
-                                </button>
-                            </fieldset>
-                        </form>
-                    </td>
             </tr>
                     <% }); %> 
                 <% } %>
         </tbody>
     </table>
-
-    <form action="/" method="POST">
-        <fieldset>
-            <div class="form-group">
-
-                <label for="name">Name:</label>
-                <input class="form-control" type="text" name="name" value="<%= data.name %>" id="name">
-                <%- include('./partials/errors.ejs', { errors: data.errors, attribute: 'name'}) %>
-
-                <label for="amount">Amount:</label>
-                <input class="form-control" type="text" name="amount" value="<%= data.total %>" id="amount">
-                <%- include('./partials/errors.ejs', { errors: data.errors, attribute: 'amount'}) %>
-
-                <input class="btn btn-primary" type="submit" name="Submit">
-            </div>
-        </fieldset>
-    </form>
-
 </div>
-
-
 <%- include('./partials/footer.ejs') %> 

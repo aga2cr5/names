@@ -3,6 +3,7 @@ import { router } from "./routes/routes.js";
 import * as middleware from './middlewares/middlewares.js';
 import { viewEngine, engineFactory, adapterFactory } from "./deps.js";
 import { oakCors } from "./deps.js";
+import { port } from "./config/config.js";
 
 const app = new Application();
 
@@ -21,7 +22,7 @@ app.use(oakCors());
 app.use(router.routes());
 
 if (!Deno.env.get('TEST_ENVIRONMENT')) {
-    app.listen({ port: 7777 });
+    app.listen({ port: port });
   }
   
   export default app;

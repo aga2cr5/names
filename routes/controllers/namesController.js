@@ -1,43 +1,40 @@
 import * as namesService from "../../services/namesService.js";
 
+//creates data object
 let data = {
   name: '',
-  amount: '',
   errors: {}
 };
 
-const showNamesDefault = ({response}) => {
-  response.redirect('/sorted/popularity');
+//show the index page with names in default order
+const showNamesDefault = async({render}) => {
+  render('index.ejs', { data: data, names: await namesService.getNames(), totalAmount: await namesService.getAmountOfNames() });
 }
 
+//shows the index page with names in popularity order
 const showNamesPopularity = async({render}) => {
   render('index.ejs', { data: data, names: await namesService.getNamesOrderByAmount(), totalAmount: await namesService.getAmountOfNames() });
 }
 
+//shows the index oage with names in alphabetical order
 const showNamesAlphabetical= async({render}) => {
   render('index.ejs', { data: data, names: await namesService.getNamesOrderByName(), totalAmount: await namesService.getAmountOfNames() });
 }
 
-const addName = async({response, request, render}) => {
-  const result = await namesService.setName(request);
-  if (result) {
-    render('index.ejs', { data: result, names: await namesService.getNames(), totalAmount: await namesService.getAmountOfNames() });
+//show the amount of given person in a different page
+const showAmountOfName = async({render, request}) => {
+  const result = await namesService.getAmountOfName(request);
+  if (result.length === 0) {
+    const message = "No such person";
+    return render('person.ejs', { info: message });
+  }
+  if (result.errors) {
+    data = result;
+    render('index.ejs', { data: data, names: await namesService.getNames(), totalAmount: await namesService.getAmountOfNames() });
   } else {
-    response.status = 200;
-    response.redirect('/');
+    render('person.ejs', { info: result.amount });
   }
 }
 
-const deleteName = async({response, params}) => {
-  const name = params.name;
-  const result = await namesService.removeName(name);
-  if (result) {
-    response.body = result;
-    response.status = 401;
-  } else {
-    response.status = 200;
-    response.redirect('/');
-  }
-}
 
-export { showNamesDefault, showNamesPopularity, showNamesAlphabetical, addName, deleteName };
+export { showNamesDefault, showNamesPopularity, showNamesAlphabetical, showAmountOfName };
