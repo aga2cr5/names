@@ -5,7 +5,5 @@ export { oakCors } from "https://deno.land/x/cors@v1.2.1/mod.ts";
 export {
     validate,
     required,
-    isNumber,
-    lengthBetween,
-    minNumber,
-    maxNumber } from "https://deno.land/x/validasaur@v0.15.0/mod.ts";
+    lengthBetween
+    } from "https://deno.land/x/validasaur@v0.15.0/mod.ts";

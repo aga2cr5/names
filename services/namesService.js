@@ -3,7 +3,7 @@ import {
     validate,
     required,
     lengthBetween
-  } from "../deps.js";
+    } from "../deps.js";
 
 
 //gets names from database in normal order
@@ -63,6 +63,7 @@ const getData = async(request) => {
     }
     return data;
 }
+
 //validation rules for getAmountOfName funtion input
 const validationRules = {
     name: [required, lengthBetween(3, 20)]

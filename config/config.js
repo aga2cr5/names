@@ -14,7 +14,7 @@ if (Deno.env.get('TEST_ENVIRONMENT')) {
 }
 
 //replace this with the port you want to run this application
-const port = 7777;
+const PORT = 7777;
 
 
-export { config, port }; 
+export { config, PORT }; 
