@@ -20,10 +20,12 @@ app.use(router.routes());
 
 if (!Deno.env.get('TEST_ENVIRONMENT')) {
     if (Deno.args.length > 0) {
-      let lastArgument = Deno.args[Deno.args.length - 1];
-      PORT = Number(lastArgument);
+      const lastArgument = Deno.args[Deno.args.length - 1];
+      let port = Number(lastArgument);
+      app.listen({ port: port });
+    } else {
+        app.listen({ port: PORT });
     }
-    app.listen({ port: PORT });
   }
   
   export default app;
