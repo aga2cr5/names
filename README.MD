@@ -1,5 +1,5 @@
 # Names
-A simple web based application for retrieving and showing names from PostgreSQL database. Users can list names from the database, sort them in different orders and get the amount of people with certain name. This app is built upon [Deno runtime](https://deno.land/).
+A simple web based application for retrieving and showing names from PostgreSQL database. Users can list names from the database, sort them in different orders and get the amount of people with certain name. This app is built upon [Deno runtime](https://deno.land/). Application can be viewed from [Heroku](https://top20names.herokuapp.com/) where is deployed at the moment.
 
 ## Installation
 In order to run the program on your own computer first you must install Deno runtime version 1.5.1 since the app is built upon it. This is rather easy no matter if you're running Windows, Linux or Mac.
@@ -23,7 +23,7 @@ After installation you can check if the installation worked by running `deno --v
 
 Further instructions on the installation of Deno can be found [here](https://github.com/denoland/deno_install).
 
-### Deploying app into a cloud platform
+### Deploying app into Heroku
 In case you don't want to run the app locally you can deploy it into a cloud platform. I have choosen to use [Heroku](https://www.heroku.com) since it's rather simple to use.
 
 1. Create an account and log in
@@ -38,7 +38,7 @@ In case you don't want to run the app locally you can deploy it into a cloud pla
     - Now scroll down untill you see section labeled _Buildpacks_
     - Click _Add buildpack_ and enter `https://github.com/chibat/heroku-buildpack-deno.git` into the Buildpack URL
     - Then just press _Save Changes_
-    
+
 ## Database
 To run the app on your own server you must use PostgreSQL. If you __DON'T__ want to create you own database for this then there is already one existing for testing this application. The database credentials are already in the config file so you don't have to do anything. Just skip the instructions on setting up the database and go straight to the [Getting started](https://github.com/aga2cr5/names#getting-started) part.
 
