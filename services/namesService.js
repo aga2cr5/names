@@ -1,9 +1,5 @@
 import { executeQuery } from "../database/database.js";
-import {
-    validate,
-    required,
-    lengthBetween
-    } from "../deps.js";
+import { validate, required, lengthBetween } from "../deps.js";
 
 
 //gets names from database in normal order
