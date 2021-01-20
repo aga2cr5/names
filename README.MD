@@ -35,9 +35,9 @@ In case you don't want to run the app locally you can deploy it into a cloud pla
     - Go to the settings which can be found at the following address (and of course replace the "app_name" with your apps name) `https://dashboard.heroku.com/apps/"app_name"/settings`
     - Now scroll down until you see section labeled __Buildpacks__
     - Click __Add buildpack__ and enter `https://github.com/chibat/heroku-buildpack-deno.git` into the Buildpack URL
-    - Then just press _Save Changes_
+    - Then just press __Save Changes__
 
-4. Install The Heroku 
+4. Install The Heroku CLI
     - Heroku CLI requires Git to work so you need to install that first from [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
     - Different ways of installation the command line interface can be found [here](https://devcenter.heroku.com/articles/heroku-cli)
     - Now you can enter `heroku login` to the terminal so you can use the Heroku CLI
@@ -59,7 +59,7 @@ In case you don't want to run the app locally you can deploy it into a cloud pla
     - Access your app at `https://app_name.herokuapp.com/`. Remember to replace app_name with your own apps name.
 
 ## Database
-To run the app on your own server you must use PostgreSQL. If you __DON'T__ want to create you own database for this then there is already one existing for testing this application. The database credentials are already in the config file so you don't have to do anything. Just skip the instructions on setting up the database and go straight to the [Getting started](https://github.com/aga2cr5/names#getting-started) part.
+To run the app on your own server you must use PostgreSQL. If you __don't__ want to create you own database for this then there is already one existing for testing this application. The database credentials are already in the config file so you don't have to do anything. Just skip the instructions on setting up the database and go straight to the [Getting started](https://github.com/aga2cr5/names#getting-started) part.
 
 If you want to run the app with your own database I recommend you use an online service providers such as ElephantSQL since they are quite easy to use and fast to se up. It is done the following way:
 
